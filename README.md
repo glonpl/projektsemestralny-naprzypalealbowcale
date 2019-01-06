@@ -1,0 +1,2 @@
+# LaTeXrepo
+# projektsemestralny-naprzypalealbowcale
