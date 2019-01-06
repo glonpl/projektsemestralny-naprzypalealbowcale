@@ -15,7 +15,17 @@ def pointstable{
 
 end
 
+def spell(word)
+    if word == nil
+      spacebar = ''
+    else
+      spacebar = word.upcase.split("")
+    end
+end
 
+def score(char)
+    score = pointstable[char]
+end
 
 	def setupplayers
 	 puts "How many players?"
