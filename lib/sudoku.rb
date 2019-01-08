@@ -56,7 +56,8 @@ class Sudoku
   end
 
   def sudoku_solve!
-    while @array_of_rows.flatten.include?(0)
+    startime = Time.now
+    while @array_of_rows.flatten.include?(0) and Time.now < startime + 2
       @array_of_rows.each_with_index do |row, row_index|
         row.each_with_index do |column, col_index|
           if @array_of_rows[row_index][col_index] == 0

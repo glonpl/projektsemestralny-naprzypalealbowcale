@@ -117,12 +117,12 @@ RSpec.describe "Sudoku" do
             expect(result.flatten).not_to include(0) 
       end
 
-    #   it 'do not solve unsolvable' do
-    #       game = Sudoku.new(hard_input)
-    #       game.sudoku_solve!
-    #       result = game.instance_variable_get(:@array_of_rows)
-    #       expect(result.flatten).not_to include(0) 
-    #   end
+      it 'do not solve unsolvable' do
+          game = Sudoku.new(hard_input)
+          game.sudoku_solve!
+          result = game.instance_variable_get(:@array_of_rows)
+          expect(result.flatten).to include(0) 
+      end
     end
 
     describe '#file_loader' do
