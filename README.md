@@ -4,3 +4,6 @@
 #polacz z travisem
 #idz do trolli od sigmy, bo znow cos nie dziala..
 123456789123456789123456789123456789000000000000000000000000000000000000000000000
+
+### Komenda do opdalenia testów w rspecu
+`bundle exec rake`
