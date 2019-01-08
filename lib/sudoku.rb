@@ -12,7 +12,7 @@ class Sudoku
   def create_rows
     new_string_num = @string_input.split(//).to_a.map {|char| char.to_i}
     9.times {@array_of_rows << new_string_num.shift(9)}
-    check_repetition(@array_of_rows)
+    check_repetition()
     @array_of_rows
   end
 
@@ -92,8 +92,9 @@ class Sudoku
   private 
   def check_repetition()
     (0..8).each do |i|
-      row = get_row(i)
-      col = get_column(i)
+      # Marshal enable to get copy of array
+      row = Marshal.load(Marshal.dump(get_row(i)))
+      col = Marshal.load(Marshal.dump(get_column(i)))
       row.delete(0)
       col.delete(0)
       if row.uniq != row
@@ -106,12 +107,13 @@ class Sudoku
 
     (0..6).step(3).each do |i|
       (0..6).step(3).each do |j|
-        box = nine_box_grid(i,j)
+        box = Marshal.load(Marshal.dump(nine_box_grid(i,j)))
         box.delete(0)
         if box.uniq != box
           raise ArgumentError, "Repetition in box"
         end     
       end
     end
+  end
 
 end

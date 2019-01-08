@@ -3,12 +3,14 @@ require_relative '../lib/sudoku.rb'
 RSpec.describe "Sudoku" do
     let(:good_input) { "530070000600195000098000060800060003400803001700020006060000280000419005000080079"}
     let(:hard_input) { "516849732307605000809700065135060907472591006968370050253186074684207500791050608"}
-
     subject(:sudoku) {Sudoku.new good_input}
 
     describe '#initalize' do
         let(:too_short_input) { "4321210013423" }
         let(:long_input) { "53007000060019500009800006080006000340080300170002000606000028000041900500008007931231321"}
+        let(:row_input) { "530370000600195000098000060800060003400803001700020006060000280000419005000080079"}
+        let(:col_input) { "530070000600195000098000060800060003600803001700020006060000280000419005000080079"}
+        let(:box_input) { "530070000600195000398000060800060003400803001700020006060000280000419005000080079"}
         
         context "Correct initalization" do
         
@@ -50,6 +52,18 @@ RSpec.describe "Sudoku" do
 
             it 'raise error if too short parameter' do 
                 expect{ Sudoku.new(too_short_input) }.to raise_error(ArgumentError)
+            end
+
+            it 'raise error if repeated values in columns' do
+                expect{ Sudoku.new(col_input) }.to raise_error(ArgumentError, "Repetition in column")                
+            end
+
+            it 'raise error if repeated values in rows' do
+                expect{ Sudoku.new(row_input) }.to raise_error(ArgumentError, "Repetition in row")                
+            end
+
+            it 'raise error if repeated values in box' do
+                expect{ Sudoku.new(box_input) }.to raise_error(ArgumentError, "Repetition in box")                
             end
         end
     end
