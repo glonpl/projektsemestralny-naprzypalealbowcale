@@ -124,6 +124,17 @@ RSpec.describe "Sudoku" do
     #       expect(result.flatten).not_to include(0) 
     #   end
     end
+
+    describe '#file_loader' do
+        it "raise error with empty name of file" do
+            expect{readFile("")}.to raise_error(ArgumentError, "File with empty name doesn't exist")
+        end
+
+        it 'return correct data from file' do
+            expected_content = "530070000600195000098000060800060003400803001700020006060000280000419005000080079"
+            expect(readFile("plansza.txt")).to eq(expected_content)
+        end
+    end
     
     
 

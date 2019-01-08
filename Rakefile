@@ -1,7 +1,14 @@
+require 'rake/testtask'
 require 'rspec/core/rake_task'
 
-RSpec::Core::RakeTask.new(:spec) do |parametr|
-  parametr.rspec_opts = '-fd'
+Rake::TestTask.new(:test) do |t| 
+  t.pattern = 'test/*_test.rb'
+
 end
 
-task default: :spec
+RSpec::Core::RakeTask.new(:spec) do |t| 
+  t.pattern = Dir.glob('spec/*_spec.rb')
+  t.rspec_opts = '-fd'
+end
+
+task default: [:test, :spec]
