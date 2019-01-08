@@ -138,6 +138,10 @@ RSpec.describe "Sudoku" do
             it "raise error with wrong extension filename" do
                 expect{readFile("plansza.doc")}.to raise_error(ArgumentError, "File must have .txt extension")
             end
+
+            it 'raise error with file does not exist' do
+                expect{readFile("not_file.txt")}.to raise_error(ArgumentError, "File not exist")
+            end
         end
 
 
