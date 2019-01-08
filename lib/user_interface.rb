@@ -1,4 +1,7 @@
 require_relative './sudoku'
+require_relative './file_handlers'
+
+
 
 puts "Let's start the game!"
 puts " Please enter the name file with Sudoku table (default: plansza.txt)"
