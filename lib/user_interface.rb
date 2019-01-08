@@ -1,15 +1,21 @@
 require_relative './sudoku'
+require_relative './file_handlers'
+
+
 
 puts "Let's start the game!"
 puts " Please enter the name file with Sudoku table (default: plansza.txt)"
 
 
 #tu otworz plik o podanej nazwie
+user_input = gets.chomp
 
+if user_input.empty?
+  user_input = 'plansza.txt'
+end
 
-  user_input = gets.chomp
-  string_input = user_input.to_s
-  game = Sudoku.new(string_input)
+data = readFile(user_input)
+game = Sudoku.new(data)
 
 
 puts "Let's fill out a sudoku table with your original inputs: "
