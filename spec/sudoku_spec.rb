@@ -1,41 +1,23 @@
+require_relative '../lib/sudoku.rb'
 
-describe "Testy Wstepne" do
-  a= Array.new
-  a=[9,5,2,15,8]
+RSpec.describe "Sudoku" do
+    describe '#initalize' do
+        let(:good_input) { "530070000600195000098000060800060003400803001700020006060000280000419005000080079"}
+        let(:too_short_input) { "4321210013423" }
+        
+        it 'create a new good instance of sudoku' do
+            game = Sudoku.new(good_input)
+            expect { game }.not_to raise_error
+        end
 
-  it "czy sortuje" do
-    expect(a.sort!).to eq([2,5,8,9,15])
-  end
-end
+        it 'returns Sudoku type' do
+            game = Sudoku.new(good_input)
+            allow(game).to receive(:kind_of?).and_return(Sudoku)
+            expect(game).to be_kind_of(Sudoku)
+        end
 
-describe "Testy poszczegolne" do
-  let(:fb) {Array.new}
-
-  it "Instancja klasy" do
-    expect(fb).to be_instance_of(Array)
-  end
-
-  it "Nil" do
-    expect(fb).not_to be(nil)
-  end
-
-
-end
-
-describe "ujemne" do
-  a = Array.new
-  a = [5,-11,3,15]
-  it "Inny wyjatek" do
-    expect(a.sort!).to eq([-11,3,5,15])
-  end
-end
-
-describe "znaki" do
-  a = Array.new
-  a =  ["Zbigniew",1,4]
-it "Zbysiu" do
-  expect{a.sort!}.to raise_error(ArgumentError)
-end
-
-
+        it 'raise error if not enough parameters' do
+            expect{ Sudoku.new }.to raise_error(ArgumentError)
+        end
+    end
 end
