@@ -126,14 +126,26 @@ RSpec.describe "Sudoku" do
     end
 
     describe '#file_loader' do
-        it "raise error with empty name of file" do
-            expect{readFile("")}.to raise_error(ArgumentError, "File with empty name doesn't exist")
+        context 'wrong filename' do
+            it "raise error with empty filename" do
+                expect{readFile("")}.to raise_error(ArgumentError, "File with empty name doesn't exist")
+            end
+
+            it "raise error with too long filename" do
+                expect{readFile("waytoolongnameoffilemehehehehexdxda.txt")}.to raise_error(ArgumentError, "Filename too long, must be shorter than 20 chars")
+            end
+
+            it "raise error with wrong extension filename" do
+                expect{readFile("plansza.doc")}.to raise_error(ArgumentError, "File must have .txt extension")
+            end
         end
+
 
         it 'return correct data from file' do
             expected_content = "530070000600195000098000060800060003400803001700020006060000280000419005000080079"
             expect(readFile("plansza.txt")).to eq(expected_content)
         end
+
     end
     
     

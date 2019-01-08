@@ -120,9 +120,9 @@ end
 
 
 def readFile(name)
-  if name.length == 0
-    raise ArgumentError, "File with empty name doesn't exist"
-  end
+  raise ArgumentError, "File with empty name doesn't exist" if name.length == 0
+  raise ArgumentError, "Filename too long, must be shorter than 20 chars" if name.length > 20
+  raise ArgumentError, "File must have .txt extension" if File.extname(name) != '.txt'
   file = File.open('resources/' + name, "r")
   data = file.read
   file.close
