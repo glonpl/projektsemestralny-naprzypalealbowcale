@@ -65,6 +65,22 @@ RSpec.describe "Sudoku" do
             expect(sudoku.get_column(8)).to eq([0,0,0,3,1,6,0,5,9])
         end
     end
+
+    describe '#nine_box_grid' do
+      it 'returns first box_array' do
+        expect(sudoku.nine_box_grid(1,1)).to match_array([5,3,0,6,0,0,0,9,8])
+      end
+
+      it 'returns last box array' do
+        expect(sudoku.nine_box_grid(7,7)).to match_array([2,8,0,0,0,5,0,7,9])
+      end 
+
+      it 'returns nil array for out ouf bounds' do
+        expect(sudoku.nine_box_grid(5,15)).to match_array([nil,nil,nil,nil,nil,nil,nil,nil,nil])
+      end
+        
+    end
+    
     
 
 end
