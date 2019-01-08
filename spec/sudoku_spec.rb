@@ -3,10 +3,12 @@ require_relative '../lib/sudoku.rb'
 RSpec.describe "Sudoku" do
     let(:good_input) { "530070000600195000098000060800060003400803001700020006060000280000419005000080079"}
     let(:hard_input) { "516849732307605000809700065135060907472591006968370050253186074684207500791050608"}
+
     subject(:sudoku) {Sudoku.new good_input}
 
     describe '#initalize' do
         let(:too_short_input) { "4321210013423" }
+        let(:long_input) { "53007000060019500009800006080006000340080300170002000606000028000041900500008007931231321"}
         
         context "Correct initalization" do
         
@@ -40,6 +42,14 @@ RSpec.describe "Sudoku" do
         context "Wrong initalization" do
             it 'raise error if not enough parameters' do
                 expect{ Sudoku.new }.to raise_error(ArgumentError)
+            end
+
+            it 'raise error if too long parameter' do 
+                expect{ Sudoku.new(long_input) }.to raise_error(ArgumentError)
+            end
+
+            it 'raise error if too short parameter' do 
+                expect{ Sudoku.new(too_short_input) }.to raise_error(ArgumentError)
             end
         end
     end

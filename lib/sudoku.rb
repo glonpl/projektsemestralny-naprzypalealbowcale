@@ -1,6 +1,7 @@
 class Sudoku
   attr_reader :board
   def initialize(string_input)
+    validate(string_input)
     @string_input = string_input
     @array_of_rows = []
     create_rows
@@ -11,6 +12,7 @@ class Sudoku
   def create_rows
     new_string_num = @string_input.split(//).to_a.map {|char| char.to_i}
     9.times {@array_of_rows << new_string_num.shift(9)}
+    check_repetition(@array_of_rows)
     @array_of_rows
   end
 
@@ -86,5 +88,30 @@ class Sudoku
       raise ArgumentError, " Your input must be 81 character long and currently it is less than 81"
     end
   end
+
+  private 
+  def check_repetition()
+    (0..8).each do |i|
+      row = get_row(i)
+      col = get_column(i)
+      row.delete(0)
+      col.delete(0)
+      if row.uniq != row
+        raise ArgumentError, "Repetition in row"
+      end
+      if col.uniq != col
+        raise ArgumentError, "Repetition in column"
+      end
+    end
+
+    (0..6).step(3).each do |i|
+      (0..6).step(3).each do |j|
+        box = nine_box_grid(i,j)
+        box.delete(0)
+        if box.uniq != box
+          raise ArgumentError, "Repetition in box"
+        end     
+      end
+    end
 
 end
