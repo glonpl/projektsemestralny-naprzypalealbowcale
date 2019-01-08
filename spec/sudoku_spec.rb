@@ -2,39 +2,45 @@ require_relative '../lib/sudoku.rb'
 
 RSpec.describe "Sudoku" do
     let(:good_input) { "530070000600195000098000060800060003400803001700020006060000280000419005000080079"}
+    let(:hard_input) { "516849732307605000809700065135060907472591006968370050253186074684207500791050608"}
     subject(:sudoku) {Sudoku.new good_input}
 
     describe '#initalize' do
         let(:too_short_input) { "4321210013423" }
         
-        it 'create a new good instance of sudoku' do
-            game = Sudoku.new(good_input)
-            expect { game }.not_to raise_error
+        context "Correct initalization" do
+        
+            it 'create a new good instance of sudoku' do
+                game = Sudoku.new(good_input)
+                expect { game }.not_to raise_error
+            end
+
+            it 'returns Sudoku type' do
+                game = Sudoku.new(good_input)
+                allow(game).to receive(:kind_of?).and_return(Sudoku)
+                expect(game).to be_kind_of(Sudoku)
+            end
+
+            it 'returns an array of 9 nested arrays which represents each row' do
+                rows = [
+                    [5,3,0,0,7,0,0,0,0],
+                    [6,0,0,1,9,5,0,0,0],
+                    [0,9,8,0,0,0,0,6,0],
+                    [8,0,0,0,6,0,0,0,3],
+                    [4,0,0,8,0,3,0,0,1],
+                    [7,0,0,0,2,0,0,0,6],
+                    [0,6,0,0,0,0,2,8,0],
+                    [0,0,0,4,1,9,0,0,5],
+                    [0,0,0,0,8,0,0,7,9]
+                ]
+                expect(sudoku.instance_variable_get(:@array_of_rows)).to eq(rows)
+            end
         end
 
-        it 'returns Sudoku type' do
-            game = Sudoku.new(good_input)
-            allow(game).to receive(:kind_of?).and_return(Sudoku)
-            expect(game).to be_kind_of(Sudoku)
-        end
-
-        it 'raise error if not enough parameters' do
-            expect{ Sudoku.new }.to raise_error(ArgumentError)
-        end
-
-        it 'returns an array of 9 nested arrays which represents each row' do
-            rows = [
-                [5,3,0,0,7,0,0,0,0],
-                [6,0,0,1,9,5,0,0,0],
-                [0,9,8,0,0,0,0,6,0],
-                [8,0,0,0,6,0,0,0,3],
-                [4,0,0,8,0,3,0,0,1],
-                [7,0,0,0,2,0,0,0,6],
-                [0,6,0,0,0,0,2,8,0],
-                [0,0,0,4,1,9,0,0,5],
-                [0,0,0,0,8,0,0,7,9]
-            ]
-            expect(sudoku.instance_variable_get(:@array_of_rows)).to eq(rows)
+        context "Wrong initalization" do
+            it 'raise error if not enough parameters' do
+                expect{ Sudoku.new }.to raise_error(ArgumentError)
+            end
         end
     end
 
@@ -78,7 +84,21 @@ RSpec.describe "Sudoku" do
       it 'returns nil array for out ouf bounds' do
         expect(sudoku.nine_box_grid(5,15)).to match_array([nil,nil,nil,nil,nil,nil,nil,nil,nil])
       end
-        
+    end
+
+    describe '#sudoku_solve!' do
+      it 'solve puzzle' do
+            sudoku.sudoku_solve!
+            result = sudoku.instance_variable_get(:@array_of_rows)
+            expect(result.flatten).not_to include(0) 
+      end
+
+    #   it 'do not solve unsolvable' do
+    #       game = Sudoku.new(hard_input)
+    #       game.sudoku_solve!
+    #       result = game.instance_variable_get(:@array_of_rows)
+    #       expect(result.flatten).not_to include(0) 
+    #   end
     end
     
     
